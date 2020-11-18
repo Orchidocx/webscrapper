@@ -27,12 +27,12 @@ def trackProduct():
 
 def verifyProduct(product):
   print(f'Checking for [{product}] in the system...')
-  
+
 
 if __name__ == "__main__":
   product = trackProduct()
-  verifyProduct(product);
-  urllib.parse.quote(product);
+  verifyProduct(product)
+  urllib.parse.quote(product)
   # url = 'https://www.nowinstock.net/videogaming/consoles/nintendoswitch/'
   print(product)
   # print(urllib.parse.quote('rx 6800'))

@@ -39,3 +39,7 @@ def verifyProduct(product):
   # print(soup)
   # link = soup.find('div', {'id': 'content'})
   # print(link)
+
+def printFixedList(arr):
+  for index, item in enumerate(arr):
+    print(f'{index+1}) {list(item.keys())[0]}')

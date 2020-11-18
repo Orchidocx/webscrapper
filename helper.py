@@ -1,5 +1,9 @@
 from bs4 import BeautifulSoup
-import requests, re, time, urllib.parse
+import requests, re, urllib.parse
+
+class bcolors:
+  HEADER = '\x1b[6;30;42m'
+  END = '\x1b[0m'
 
 def welcomeMessage():
   print('Welcome to the Web Scrapping Project!')
@@ -8,7 +12,7 @@ def trackProduct():
   print('Enter the product you wish to track')
   return input('> ')
 
-def monitorSupply(url):
+def monitorSupply(url, captureNoStock):
   html_text = requests.get(url)._content
   soup = BeautifulSoup(html_text, 'html.parser')
   suppliers = soup.find_all('tr', {'id':re.compile('tr*')})
@@ -16,15 +20,17 @@ def monitorSupply(url):
   for supplier in suppliers:
     name = supplier.find('td')
     stockStatus = supplier.find('td', {'class': 'stockStatus'})
-    if(name.a['href'] != '#'):
-      print(f'''
-      {name.text}
-      Status: {stockStatus.text}
-      Link: {name.a["href"]}
-      ''')
+    if(captureNoStock):
+      if(name.a['href'] != '#'):
+        print(f'Name: {name.text}')
+        
+        if(stockStatus.text == "Out of Stock"):
+          print(f'Status: ***{stockStatus.text}***')
+        else:
+          print(f'Status: >>>>>{stockStatus.text}<<<<<')
+        print(f'Link: {name.a["href"]}\n')
 
-def verifyProduct(product):
-  pass
+# def verifyProduct(product):
   # print(f'Checking for [{product}] in the system...')
   # url = f'https://www.nowinstock.net/search.php?q={urllib.parse.quote(product)}'
   # driver = webdriver.Firefox()

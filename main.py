@@ -1,18 +1,18 @@
 import helper
+import time
 
-# import time
-# import 
 PRODUCT_URLS = [
   {"RX 6800": "https://www.nowinstock.net/computers/videocards/amd/rx6800/"},
   {"RX 6800 XT": "https://www.nowinstock.net/computers/videocards/amd/rx6800xt/"},
   {"RX 6900 XT": "https://www.nowinstock.net/computers/videocards/amd/rx6900xt/"},
   {"Nintendo Switch": "https://www.nowinstock.net/videogaming/consoles/nintendoswitch/"}
   ]
+
 if __name__ == "__main__":
   helper.welcomeMessage()
   print('Select a product to track (enter a number between 1 to 4):')
   helper.printFixedList(PRODUCT_URLS)
-
+  product_name, product_url, refresh_time = ['','','']
   selected_product = input('> ')
   while True:
     try:
@@ -45,8 +45,7 @@ if __name__ == "__main__":
     except:
       print('Invalid input')
       selected_product = input('> ')
-  # time_wait = 60
-  # while True:
-    # monitorSupply(url);
-    # print(f'Waiting for {time_wait} seconds...')
-    # time.sleep(time_wait)
+  while True:
+    helper.monitorSupply(product_url, True)
+    print(f'Refreshing in {refresh_time} seconds...')
+    time.sleep(refresh_time)

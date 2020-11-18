@@ -45,7 +45,16 @@ if __name__ == "__main__":
     except:
       print('Invalid input')
       selected_product = input('> ')
+  print('Do you want to show out of stock links? (y/N)')
+  print('[DEFAULT: NO]')
+  trackNoStock = input('> ')
+  if(trackNoStock == ''):
+    trackNoStock = False
+  elif(trackNoStock.upper() == 'Y'):
+    trackNoStock = True
+  else:
+    trackNoStock = False
   while True:
-    helper.monitorSupply(product_url, True)
+    helper.monitorSupply(product_url, trackNoStock)
     print(f'Refreshing in {refresh_time} seconds...')
     time.sleep(refresh_time)

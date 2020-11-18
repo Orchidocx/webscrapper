@@ -1,10 +1,6 @@
 from bs4 import BeautifulSoup
 import requests, re, urllib.parse
 
-class bcolors:
-  HEADER = '\x1b[6;30;42m'
-  END = '\x1b[0m'
-
 def welcomeMessage():
   print('Welcome to the Web Scrapping Project!')
 
@@ -20,15 +16,17 @@ def monitorSupply(url, captureNoStock):
   for supplier in suppliers:
     name = supplier.find('td')
     stockStatus = supplier.find('td', {'class': 'stockStatus'})
-    if(captureNoStock):
-      if(name.a['href'] != '#'):
+    if(name.a['href'] != '#'):
+      if(stockStatus.text != "Out of Stock"):
         print(f'Name: {name.text}')
-        
+        print(f'Status: >>>>>{stockStatus.text}<<<<<')
+        print(f'Link: {name.a["href"]}\n')
+      elif(stockStatus.text == "Out of Stock" and captureNoStock):
+        print(f'Name: {name.text}')
         if(stockStatus.text == "Out of Stock"):
           print(f'Status: ***{stockStatus.text}***')
-        else:
-          print(f'Status: >>>>>{stockStatus.text}<<<<<')
         print(f'Link: {name.a["href"]}\n')
+        
 
 # def verifyProduct(product):
   # print(f'Checking for [{product}] in the system...')
